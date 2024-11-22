@@ -1,1 +1,16 @@
+clc;
+clear;
+
+% Inputs
+total_calls = input('Total calls in 8 hours: ');
+avg_holding_time = input('Average holding time (seconds): ');
+busy_hour_calls = input('Calls during the Busy Hour: ');
+
+% Calculations
+traffic_8h = (total_calls * avg_holding_time) / (8 * 3600); % 8 hours in seconds
+traffic_busy = (busy_hour_calls * avg_holding_time) / 3600; % 1 hour in seconds
+
+% Display Results
+fprintf('Traffic Intensity over 8 hours: %.2f Erlangs, %.2f CCS\n', traffic_8h, traffic_8h * 36);
+fprintf('Traffic Intensity during Busy Hour: %.2f Erlangs, %.2f CCS\n', traffic_busy, traffic_busy * 36);
 

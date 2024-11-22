@@ -1,1 +1,23 @@
+clc;
+clear;
+
+disp('Traffic Intensity Converter');
+disp('1: Convert from Erlangs to CCS');
+disp('2: Convert from CCS to Erlangs');
+
+% User selection:
+choice = input('Enter your choice (1 or 2): ');
+
+if choice == 1
+    % Convert Erlangs to CCS
+    erlangs = input('Enter traffic intensity in Erlangs: ');
+    ccs = erlangs * 36; % 1 Erlang = 36 CCS
+    fprintf('%.2f Erlangs is equal to %.2f CCS.\n', erlangs, ccs);
+
+elseif choice == 2
+    % Convert CCS to Erlangs
+    ccs = input('Enter traffic intensity in CCS: ');
+    erlangs = ccs / 36; % 1 CCS = 1/36 Erlangs
+    fprintf('%.2f CCS is equal to %.2f Erlangs.\n', ccs, erlangs);
+end
 

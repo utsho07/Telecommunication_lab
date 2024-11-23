@@ -1,1 +1,12 @@
+clc;
+clear all;
+
+minutes= 500;  %Number of minutes used per mounth per user
+Twork= 0.9;    %Traffic During Work day
+TBH= 0.1;      %Traffic during busy hour
+Days= 20;      %Number of workdays in a mounth
+
+%solution
+Traffic = minutes * Twork * (TBH/Days);
+fprintf('Traffic per user per BH is %.4f Erlangs\n', Traffic/60);
 

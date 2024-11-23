@@ -1,1 +1,25 @@
+clc;
+clear all;
+% Parameters
+E = 10; % Traffic intensity in Erlangs
+targetBlockingProbability = 0.01; % Target blocking probability (1%)
+% Start with one channel
+N = 1;
+while true
+	% Calculate the Erlang B blocking probability
+	numerator = (E^N) / factorial(N);
+	denominator = sum((E.^[0:N]) ./ factorial([0:N]));
+     blockingProbability = numerator / denominator;
+	% Check if the blocking probability meets the target
+	if blockingProbability <= targetBlockingProbability
+    	break;
+	end
+
+	% Increment the number of channels
+	N = N + 1;
+end
+
+% Display the results
+fprintf('Required Channels: %d\n', N);
+fprintf('Blocking Probability: %.4f\n', blockingProbability);
 

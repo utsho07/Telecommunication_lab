@@ -1,1 +1,16 @@
+clc;
+minutes = 500;   %Call duration in minutes
+Twork = 0.9;     % Fraction of traffic during working hours
+TBH = 0.1;       % Fraction of traffic during Busy Hour
+Days = 20;       % Total number of working days in a month
+MeanHT = 100;    % Average call holding time in seconds
 
+% Calculate Traffic per user per Busy Hour
+Traffic = minutes * Twork * (TBH / Days);
+
+% Calculate Busy Hour Call Attempts (BHCAs)
+BHCAs = (Traffic / 60) * (3600 / MeanHT);
+
+% Display the Average Busy Hour Call Attempts
+fprintf('Average Busy Hour Call Attempts %.2f\n',BHCAs);
+`

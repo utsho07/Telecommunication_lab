@@ -1,1 +1,17 @@
+clc;
+clear all;
+% Define inputs
+callDurations = [120, 240, 360, 180];  % Call durations in seconds
+timePeriod = 3600;  % Time period in seconds
+
+
+% Calculate metrics
+totalCallSeconds = sum(callDurations);  % Total Call-Seconds
+ccs = totalCallSeconds / 100;       	% Centi-Call Seconds
+erlangs = totalCallSeconds / timePeriod; % Erlangs
+
+% Display results
+fprintf('Total Call-Seconds: %.2f\n', totalCallSeconds);
+fprintf('CCS (Centi-Call Seconds): %.2f\n', ccs);
+fprintf('Erlangs: %.4f\n', erlangs);
 

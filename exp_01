@@ -1,1 +1,12 @@
+clc;
+clear;
+% Define the parameters
+LC = 10; % Lost Calls
+CC = 380; % Carried Calls
+OC = LC + CC; % Total Offered Calls
+
+% Calculate Grade of Service
+GoS = LC / OC;
+% Display the result
+fprintf('The Grade of Service during the busy hour is: %.4f\n', GoS);
 

@@ -1,1 +1,11 @@
+clc;
+clear;
 
+% Inputs
+mu = input('Enter the number of calls (μ) in hour: ');
+h = input('Enter the average holding time (H) in minutes: ');
+% Calculate Traffic Intensity
+A= mu*(h/60);
+
+% Display Result
+disp(['Traffic Intensity (A): ', num2str(A)]);

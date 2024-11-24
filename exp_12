@@ -1,1 +1,18 @@
+clc;
+clear all;
+
+% Inputs
+channels = 50; % Number of channels
+blocking = 0.02; % Blocking probability (2%)
+HT = 120; % Average holding time in seconds
+BHcall = 1.2; % Busy hour call rate
+
+% Calculations
+A = 40.26; % Total traffic in Erlangs (already given)
+B = A * (1 - blocking); % Traffic after considering blocking
+Avgtraffic_user = (BHcall * HT) / 3600; % Average traffic per user in Erlangs
+No_users = B / Avgtraffic_user; % Total number of users supported
+
+% Display Results
+printf('Number of mobile subscribers supported: %d\n', round(No_users));
 

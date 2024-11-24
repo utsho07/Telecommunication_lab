@@ -1,1 +1,25 @@
+clc;
+clear all;
+Rlines=15000;
+Blines=80000;
+PWElines=5000;
+Slines=100000;
+percentR_lines=Rlines/Slines;
+percentB_lines=Blines/Slines;
+percentPWE_lines=PWElines/Slines;
+CR_R=2;
+CR_B=3;
+CR_PWE=10;
+CR=CR_R*percentR_lines+CR_B*percentB_lines+CR_PWE*percentPWE_lines;
+printf('The call rate is %f calls per line\n',CR);
+HD_ABS=1.5;
+ABS_BH_calls=CR*Slines;
+cell_capacity=HD_ABS*ABS_BH_calls;
+HT_R=140;
+HT_B=160;
+HT_PWE=200;
+printf('The cell capacity of a switch is %f\n',cell_capacity);
+CCS=(CR_R*HT_R/100)*percentR_lines+(CR_B*HT_B/100)*percentB_lines+(CR_PWE*HT_PWE/100)*percentPWE_lines;
+ABS_BH_usage=(CCS/36)*Slines;
+printf('Design Erlangs is %f\n',HD_ABS*ABS_BH_usage);
 

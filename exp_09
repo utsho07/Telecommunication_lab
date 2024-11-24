@@ -1,1 +1,28 @@
+% Inputs
+U = 5000; lambda = 2; D = 3; n_channels = 100; P_b = 0.01;
+
+
+% Total traffic (A) in Erlangs
+A = U * lambda * (D / 60);
+
+
+
+% MSC capacity (C) using Erlang-B formula
+lo = 0; hi = n_channels * 2; tol = 1e-6;
+while hi - lo > tol
+    mid = (lo + hi) / 2;
+    B = 1;
+    for i = 1:n_channels, B = (mid * B) / (i + mid * B);
+    end
+    if B > P_b,
+      hi = mid; else, lo = mid;
+      end
+end
+
+
+C = (lo + hi) / 2;
+% Required MSCs (N)
+N = ceil(A / C);
+% Outputs
+fprintf('Total Traffic (A) = %.2f Erlangs\nMSC Capacity (C) = %.2f Erlangs\nRequired MSCs (N) = %d\n', A, C, N);
 

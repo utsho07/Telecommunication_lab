@@ -1,28 +1,35 @@
+clc;
+clear all;
+
 % Inputs
-U = 5000; lambda = 2; D = 3; n_channels = 100; P_b = 0.01;
+Tpopu = 200000;       % Total population
+SP = 0.25;            % Subscriber penetration
+HT1 = 100;            % Holding time (in seconds) for Mobile-to-Land line and vice versa
+c1 = 3;               % Average calls/hour for Mobile-to-Land line and vice versa
+HT2 = 80;             % Holding time (in seconds) for Mobile-to-Mobile
+c2 = 4;               % Average calls/hour for Mobile-to-Mobile
+TMSC = 1800;          % Traffic capacity that one MSC can hold (in Erlangs)
+TrafDist = 0.9;       % Traffic distribution for Mobile-to-Land line and vice versa
 
+% Solution
+aM_L = c1 * HT1 / 3600;   % Traffic generated per subscriber for Mobile-to-Land (M-L) and vice versa
+aM_M = c2 * HT2 / 3600;   % Traffic generated per subscriber for Mobile-to-Mobile (M-M)
 
-% Total traffic (A) in Erlangs
-A = U * lambda * (D / 60);
+WlessSub = SP * Tpopu;    % Total number of wireless subscribers
 
+% Total Traffic in Erlangs
+TotalTraffic = WlessSub * TrafDist * aM_L + WlessSub * (1 - TrafDist) * aM_M;
 
+% Number of MSCs required
+MSCreqd = TotalTraffic / TMSC;
 
-% MSC capacity (C) using Erlang-B formula
-lo = 0; hi = n_channels * 2; tol = 1e-6;
-while hi - lo > tol
-    mid = (lo + hi) / 2;
-    B = 1;
-    for i = 1:n_channels, B = (mid * B) / (i + mid * B);
-    end
-    if B > P_b,
-      hi = mid; else, lo = mid;
-      end
+% Round up to the next integer if necessary
+if (MSCreqd - int32(MSCreqd)) > 0
+    MSCreqd = int32(MSCreqd) + 1;
+else
+    MSCreqd = int32(MSCreqd);
 end
 
-
-C = (lo + hi) / 2;
-% Required MSCs (N)
-N = ceil(A / C);
-% Outputs
-fprintf('Total Traffic (A) = %.2f Erlangs\nMSC Capacity (C) = %.2f Erlangs\nRequired MSCs (N) = %d\n', A, C, N);
-
+% Output Results
+fprintf('Total Traffic = %.1f Erlangs\n', TotalTraffic);
+fprintf('Number of MSCs Required = %d\n', MSCreqd);

@@ -1,34 +1,27 @@
 clc;
 clear all;
 
-% Inputs for calculating Offered Load
-lambda = 100; % Average call arrival rate (calls per hour)
-H = 0.1; % Average call holding time (hours per call)
+% Inputs
+lambda = input('Enter the average call arrival rate (calls per hour): '); % Call arrival rate
+ht = input('Enter the average call holding time (hours per call): ');     % Call holding time
+B_target = input('Enter the target blocking probability (B): ');         % Target blocking probability
 
-% Calculate Offered Load (E)
-E = lambda * H; % Traffic intensity in Erlangs
+% Calculate Offered Load (A)
+A = lambda * ht; % Offered Load in Erlangs
+fprintf('Offered Load (A): %.4f Erlangs\n', A);
 
-% Target blocking probability
-targetBlockingProbability = 0.01; % Target blocking probability (1%)
+% Erlang B formula function
+erlangB = @(A, N) (A^N / factorial(N)) / sum(A.^[0:N] ./ factorial([0:N]));
 
-% Start with one channel
-N = 1;
+% Part 2: Calculate Required Channels (N)
+N = 1; % Start with one channel
 while true
-    % Calculate the Erlang B blocking probability
-    numerator = (E^N) / factorial(N);
-    denominator = sum((E.^[0:N]) ./ factorial([0:N]));
-    blockingProbability = numerator / denominator;
-
-    % Check if the blocking probability meets the target
-    if blockingProbability <= targetBlockingProbability
+    B = erlangB(A, N);
+    if B <= B_target
         break;
     end
-
-    % Increment the number of channels
-    N = N + 1;
+    N = N + 1; % Increment channels until target blocking probability is met
 end
 
-% Display the results
-fprintf('Offered Load (E): %.2f Erlangs\n', E);
-fprintf('Required Channels: %d\n', N);
-fprintf('Blocking Probability: %.4f\n', blockingProbability);
+fprintf('Required Service Channels (N): %d\n', (N));
+fprintf('Blocking probability (P): %f\n', B);

@@ -10,8 +10,8 @@ B_target = input('Enter the target blocking probability (B): ');         % Targe
 A = lambda * ht; % Offered Load in Erlangs
 fprintf('Offered Load (A): %.4f Erlangs\n', A);
 
-% Erlang B formula function
-erlangB = @(A, N) (A^N / factorial(N)) / sum(A.^[0:N] ./ factorial([0:N]));
+% Erlang B formula function using optimized computation
+erlangB = @(A, N) (A^N / exp(gammaln(N + 1))) / sum(A.^[0:N] ./ exp(gammaln([0:N] + 1)));
 
 % Part 2: Calculate Required Channels (N)
 N = 1; % Start with one channel
@@ -23,5 +23,6 @@ while true
     N = N + 1; % Increment channels until target blocking probability is met
 end
 
-fprintf('Required Service Channels (N): %d\n', (N));
-fprintf('Blocking probability (P): %f\n', B);
+% Output Results
+fprintf('Required Service Channels (N): %d\n', N);
+fprintf('Achieved Blocking Probability (B): %.6f\n', B);

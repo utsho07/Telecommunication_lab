@@ -21,14 +21,9 @@ WlessSub = SP * Tpopu;    % Total number of wireless subscribers
 TotalTraffic = WlessSub * TrafDist * aM_L + WlessSub * (1 - TrafDist) * aM_M;
 
 % Number of MSCs required
-MSCreqd = TotalTraffic / TMSC;
+MSCreqd = ceil(TotalTraffic / TMSC);
 
-% Round up to the next integer if necessary
-if (MSCreqd - int32(MSCreqd)) > 0
-    MSCreqd = int32(MSCreqd) + 1;
-else
-    MSCreqd = int32(MSCreqd);
-end
+
 
 % Output Results
 fprintf('Total Traffic = %.1f Erlangs\n', TotalTraffic);
